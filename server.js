@@ -16,10 +16,15 @@ app.use(bodyParser.urlencoded({ extends: true }))
 const mongoose = require('mongoose')
 mongoose.connect(process.env.DATABASE_URL, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useFindAndModify: false
 })
 .then(() => {
     console.log('Connected to MongoDB Cloud')
+
+    // run seeder
+    const DBSeeder = require('./database/seeders/DatabaseSeeder')
+    DBSeeder.seeds()
 })
 .catch((err) => {
     console.log(err)
